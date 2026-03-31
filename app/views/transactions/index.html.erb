@@ -1,0 +1,47 @@
+<div class="container">
+
+  <h1>Finanças</h1>
+
+  <div class="dashboard">
+    <div class="card balance">
+      Saldo: <%= @balance %>
+    </div>
+
+    <div class="card income">
+      Receitas: <%= @total_income %>
+    </div>
+
+    <div class="card expense">
+      Despesas: <%= @total_expense %>
+    </div>
+  </div>
+
+  <%= link_to "Nova Transação", new_transaction_path %>
+
+  <table>
+    <tr>
+      <th>Descrição</th>
+      <th>Valor</th>
+      <th>Tipo</th>
+      <th>Ações</th>
+    </tr>
+
+    <% @transactions.each do |t| %>
+      <tr>
+        <td><%= t.description %></td>
+
+        <td class="<%= t.income? ? 'income-text' : 'expense-text' %>">
+          <%= t.amount %>
+        </td>
+
+        <td><%= t.kind %></td>
+
+        <td>
+          <%= link_to "Editar", edit_transaction_path(t) %>
+          <%= link_to "Excluir", transaction_path(t), method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

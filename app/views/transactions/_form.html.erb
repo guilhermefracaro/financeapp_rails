@@ -1,0 +1,67 @@
+<%= form_with(model: @transaction) do |form| %>
+
+  <!-- 🔴 ERROS -->
+  <% if @transaction.errors.any? %>
+    <div class="error-box">
+      <ul>
+        <% @transaction.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- 🧾 DESCRIÇÃO -->
+  <div>
+    <%= form.label :description, "Descrição" %><br>
+    <%= form.text_field :description %>
+  </div>
+
+  <br>
+
+  <!-- 💰 VALOR -->
+  <div>
+    <%= form.label :amount, "Valor" %><br>
+    <%= form.number_field :amount, step: 0.01 %>
+  </div>
+
+  <br>
+
+  <!-- 🔁 TIPO -->
+  <div>
+    <%= form.label :kind, "Tipo" %><br>
+    <%= form.select :kind, [["Receita", "income"], ["Despesa", "expense"]] %>
+  </div>
+
+  <br>
+
+  <!-- 📅 DATA -->
+  <div>
+    <%= form.label :date, "Data" %><br>
+    <%= form.date_field :date %>
+  </div>
+
+  <br>
+
+  <!-- 🗂️ CATEGORIA -->
+  <div>
+    <%= form.label :category_id, "Categoria" %><br>
+    <%= form.collection_select :category_id, Category.order(:name), :id, :name, prompt: "Selecione uma categoria" %>
+  </div>
+
+  <br>
+
+  <!-- 👤 USUÁRIO (temporário) -->
+  <div>
+    <%= form.label :user_id, "Usuário" %><br>
+    <%= form.collection_select :user_id, User.all, :id, :name, prompt: "Selecione um usuário" %>
+  </div>
+
+  <br>
+
+  <!-- 🚀 BOTÃO -->
+  <div>
+    <%= form.submit "Salvar Transação" %>
+  </div>
+
+<% end %>
